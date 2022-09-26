@@ -98,6 +98,8 @@ class AnswersStream(TypeformStream):
         th.Property("question_id", th.StringType),
         th.Property("data_type", th.StringType),
         th.Property("answer", th.StringType),
+        th.Property("submitted_at", th.DateTimeType),
+        th.Property("landed_at", th.DateTimeType),
     ).to_dict()
 
     def post_process(self, row: dict, context: Optional[dict] = None) -> Optional[dict]:
@@ -128,7 +130,9 @@ class AnswersStream(TypeformStream):
                             "question_id": answer.get('field').get('id'),
                             "data_type": data_type,
                             "answer": answer_value,
-                            "response_id": item['response_id']
+                            "response_id": item['response_id'],
+                            "submitted_at": item['submitted_at'],
+                            "landed_at": item['landed_at']
                         }
 
         return None
